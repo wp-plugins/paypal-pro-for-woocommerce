@@ -12,7 +12,8 @@ PayPal Pro is a direct gateway which allows you to take credit card, PayPal Cred
 = Introduction =
 
 *	Please note: As Paypal requires an SSL certificate, please make sure to check the “Force Secure Checkout” box. Go to: WooCommerce > Settings > Checkout
-*	PayPal Pro (website payments pro) and PayPal Pro PayFlow.
+*	`PayPal Pro (website payments pro)`
+*	`PayPal Pro PayFlow`
 
 This Plugin offers in-context payment so buyers never leave your site to pay for an order. After a buyer has purchased once with your site.
 
