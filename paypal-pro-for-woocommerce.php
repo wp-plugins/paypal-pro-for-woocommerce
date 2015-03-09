@@ -7,7 +7,7 @@
  * Plugin URI:        http://www.mbjtechnolabs.com
  * Description:       PayPal Pro is a direct gateway which allows you to take credit card, PayPal Credit, and PayPal details directly on your checkout page.
  * Version:           1.0.0
- * Author:            johnny-manziel
+ * Author:            phpwebcreators
  * Author URI:        http://www.mbjtechnolabs.com
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
