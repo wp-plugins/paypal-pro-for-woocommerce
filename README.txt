@@ -89,6 +89,11 @@ PayPal Pro requires that you have a PayPal Pro merchant account which you can si
 * [read more about PayPal Pro](https://www.paypal.com/webapps/mpp/website-payments-pro)
 
 
+== Screenshots ==
+
+1. Setting up PayPal Pro page.
+2. Setting up PayPal Pro PayFlow page.
+
 
 == Changelog ==
 
