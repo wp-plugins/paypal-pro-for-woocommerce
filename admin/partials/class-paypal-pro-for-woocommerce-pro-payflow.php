@@ -10,13 +10,13 @@
 class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
 
     /**
-     * @since    1.0.0
+     * Constructor
      */
     public function __construct() {
         $this->id = 'paypal_pro_payflow';
         $this->method_title = __('PayPal Pro PayFlow', 'paypal-pro-for-woocommerce');
         $this->method_description = __('PayPal Pro PayFlow Edition works by adding credit card fields on the checkout and then sending the details to PayPal for verification.', 'paypal-pro-for-woocommerce');
-        $this->icon = apply_filters('woocommerce_paypal_pro_payflow_icon', WP_PLUGIN_URL . "/" . plugin_basename(dirname(dirname(__FILE__))) . '/admin/assets/images/cards.png');
+        $this->icon = apply_filters('woocommerce_paypal_pro_payflow_icon', WP_PLUGIN_URL . "/" . plugin_basename(dirname(dirname(__FILE__))) . '/assets/images/cards.png');
         $this->has_fields = true;
         $this->supports = array(
             'products',
@@ -26,13 +26,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
         $this->testurl = 'https://pilot-payflowpro.paypal.com';
         $this->allowed_currencies = apply_filters('woocommerce_paypal_pro_allowed_currencies', array('USD', 'EUR', 'GBP', 'CAD', 'JPY', 'AUD'));
 
-
+        // Load the form fields
         $this->init_form_fields();
 
-
+        // Load the settings.
         $this->init_settings();
 
-
+        // Get setting values
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->enabled = $this->get_option('enabled');
@@ -50,14 +50,14 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             $this->order_button_text = __('Enter payment details', 'paypal-pro-for-woocommerce');
         }
 
-
+        // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('woocommerce_receipt_paypal_pro_payflow', array($this, 'receipt_page'));
         add_action('woocommerce_api_wc_gateway_paypal_pro_payflow', array($this, 'return_handler'));
     }
 
     /**
-     * @since    1.0.0
+     * Initialise Gateway Settings Form Fields
      */
     public function init_form_fields() {
         $this->form_fields = array(
@@ -162,7 +162,9 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Check if this gateway is enabled and available in the user's country
+     *
+     * This method no is used anywhere??? put above but need a fix below
      */
     public function is_available() {
         if ($this->enabled === "yes") {
@@ -171,12 +173,12 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
                 return false;
             }
 
-
+            // Currency check
             if (!in_array(get_option('woocommerce_currency'), $this->allowed_currencies)) {
                 return false;
             }
 
-
+            // Required fields check
             if (!$this->paypal_vendor || !$this->paypal_password) {
                 return false;
             }
@@ -187,7 +189,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Process the payment
      */
     public function process_payment($order_id) {
         $order = new WC_Order($order_id);
@@ -205,7 +207,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             $card_cvc = isset($_POST['paypal_pro_payflow-card-cvc']) ? wc_clean($_POST['paypal_pro_payflow-card-cvc']) : '';
             $card_expiry = isset($_POST['paypal_pro_payflow-card-expiry']) ? wc_clean($_POST['paypal_pro_payflow-card-expiry']) : '';
 
-
+            // Format values
             $card_number = str_replace(array(' ', '-'), '', $card_number);
             $card_expiry = array_map('trim', explode('/', $card_expiry));
             $card_exp_month = str_pad($card_expiry[0], 2, "0", STR_PAD_LEFT);
@@ -214,20 +216,26 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             if (strlen($card_exp_year) == 4) {
                 $card_exp_year = $card_exp_year - 2000;
             }
+
+            // Do payment with paypal
             return $this->do_payment($order, $card_number, $card_exp_month . $card_exp_year, $card_cvc);
         }
     }
 
     /**
-     * @since    1.0.0
+     * Receipt_page for showing the payment form which sends data to authorize.net
      */
     public function receipt_page($order_id) {
         if ($this->transparent_redirect) {
-
+            // load in script to better handle credit card form formatting
             wp_enqueue_script('jquery-payment');
+
+            // Get the order
             $order = new WC_Order($order_id);
             $url = $this->testmode ? 'https://pilot-payflowlink.paypal.com' : 'https://payflowlink.paypal.com';
             $post_data = $this->get_post_data($order);
+
+            // Request token
             $token = $this->get_token($order, $post_data);
 
             if (!$token) {
@@ -261,7 +269,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
 
                             <input type="hidden" name="SECURETOKEN" value="<?php echo esc_attr($token['SECURETOKEN']); ?>" />
                             <input type="hidden" name="SECURETOKENID" value="<?php echo esc_attr($token['SECURETOKENID']); ?>" />
-                            <input type="hidden" name="SILENTTRAN" value="TRUE" />					
+                            <input type="hidden" name="SILENTTRAN" value="TRUE" />
                         </fieldset>
                     </div>
                     <input type="submit" value="<?php _e('Confirm and pay', 'paypal-pro-for-woocommerce'); ?>" class="submit buy button" style="float:right;"/>
@@ -279,12 +287,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * handles return data and does redirects
      */
     public function return_handler() {
-
+        // Clean
         @ob_clean();
 
+        // Header
         header('HTTP/1.1 200 OK');
 
         $result = isset($_POST['RESULT']) ? absint($_POST['RESULT']) : null;
@@ -295,30 +304,43 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             exit;
         }
 
+        // Get the order
         $order = new WC_Order($order_id);
 
         switch ($result) {
-
+            // Approved or screening service was down
             case 0 :
             case 127 :
                 $txn_id = (!empty($_POST['PNREF']) ) ? wc_clean($_POST['PNREF']) : '';
 
+                // get transaction details
                 $details = $this->get_transaction_details($txn_id);
-                if ($details && strtolower($details['TRANSSTATE']) === '3') {
 
+                // check if it is captured or authorization only [transstate 3 is authoriztion only]
+                if ($details && strtolower($details['TRANSSTATE']) === '3') {
+                    // Store captured value
                     update_post_meta($order->id, '_paypalpro_charge_captured', 'no');
                     add_post_meta($order->id, '_transaction_id', $txn_id, true);
+
+                    // Mark as on-hold
                     $order->update_status('on-hold', sprintf(__('PayPal Pro (PayFlow) charge authorized (Charge ID: %s). Process order to take payment, or cancel to remove the pre-authorization.', 'paypal-pro-for-woocommerce'), $txn_id));
+
+                    // Reduce stock levels
                     $order->reduce_order_stock();
                 } else {
+
+                    // Add order note
                     $order->add_order_note(sprintf(__('PayPal Pro (Payflow) payment completed (PNREF: %s)', 'paypal-pro-for-woocommerce'), $parsed_response['PNREF']));
+
+                    // Payment complete
                     $order->payment_complete($txn_id);
                 }
 
+                // Remove cart
                 WC()->cart->empty_cart();
                 $redirect = $order->get_checkout_order_received_url();
                 break;
-
+            // Under Review by Fraud Service
             case 126 :
                 $order->add_order_note($_POST['RESPMSG']);
                 $order->add_order_note($_POST['PREFPSMSG']);
@@ -327,7 +349,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
                 $redirect = $order->get_checkout_order_received_url();
                 break;
             default :
-
+                // Mark failed
                 $order->update_status('failed', $_POST['RESPMSG']);
 
                 $redirect = $order->get_checkout_payment_url(true);
@@ -344,7 +366,10 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Get a token for transparent redirect
+     * @param  object $order
+     * @param  array $post_data
+     * @return bool or array
      */
     public function get_token($order, $post_data, $force_new_token = false) {
         if (!$force_new_token && get_post_meta($order->id, '_SECURETOKENHASH', true) == md5(json_encode($post_data))) {
@@ -402,7 +427,9 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Get a list of parameters to send to paypal
+     * @param object $order
+     * @return array
      */
     public function get_post_data($order) {
         $post_data = array();
@@ -410,20 +437,20 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
         $post_data['VENDOR'] = $this->paypal_vendor;
         $post_data['PARTNER'] = $this->paypal_partner;
         $post_data['PWD'] = $this->paypal_password;
-        $post_data['TENDER'] = 'C';
-        $post_data['TRXTYPE'] = $this->paymentaction;
-        $post_data['AMT'] = $order->get_total();
-        $post_data['CURRENCY'] = $order->get_order_currency();
-        $post_data['CUSTIP'] = $this->get_user_ip();
+        $post_data['TENDER'] = 'C'; // Credit card
+        $post_data['TRXTYPE'] = $this->paymentaction; // Sale / Authorize
+        $post_data['AMT'] = $order->get_total(); // Order total
+        $post_data['CURRENCY'] = $order->get_order_currency(); // Currency code
+        $post_data['CUSTIP'] = $this->get_user_ip(); // User IP Address
         $post_data['EMAIL'] = $order->billing_email;
         $post_data['INVNUM'] = $order->get_order_number();
-        $post_data['BUTTONSOURCE'] = 'mbjtechnolabs_SP';
+        $post_data['BUTTONSOURCE'] = 'WooThemes_Cart';
 
         if ($this->soft_descriptor) {
             $post_data['MERCHDESCR'] = $this->soft_descriptor;
         }
 
-
+        /* Send Item details */
         $item_loop = 0;
 
         if (sizeof($order->get_items()) > 0) {
@@ -447,7 +474,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
                 }
             }
 
-
+            // Shipping
             if (( $order->get_total_shipping() + $order->get_shipping_tax() ) > 0) {
                 $post_data['L_NAME' . $item_loop] = 'Shipping';
                 $post_data['L_DESC' . $item_loop] = 'Shipping and shipping taxes';
@@ -459,7 +486,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
                 $item_loop++;
             }
 
-
+            // Discount
             if ($order->get_order_discount() > 0) {
                 $post_data['L_NAME' . $item_loop] = 'Order Discount';
                 $post_data['L_DESC' . $item_loop] = 'Discounts after tax';
@@ -471,6 +498,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
 
             $ITEMAMT = round($ITEMAMT, 2);
 
+            // Fix rounding
             if (absint($order->get_total() * 100) !== absint($ITEMAMT * 100)) {
                 $post_data['L_NAME' . $item_loop] = 'Rounding amendment';
                 $post_data['L_DESC' . $item_loop] = 'Correction if rounding is off (this can happen with tax inclusive prices)';
@@ -504,17 +532,22 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * do_payment function.
+     *
+     * @param object $order
+     * @param string $card_number
+     * @param string $card_exp
+     * @param string $card_cvc
      */
     public function do_payment($order, $card_number, $card_exp, $card_cvc) {
 
-
+        // Send request to paypal
         try {
             $url = $this->testmode ? $this->testurl : $this->liveurl;
             $post_data = $this->get_post_data($order);
-            $post_data['ACCT'] = $card_number;
-            $post_data['EXPDATE'] = $card_exp;
-            $post_data['CVV2'] = $card_cvc;
+            $post_data['ACCT'] = $card_number; // Credit Card
+            $post_data['EXPDATE'] = $card_exp; //MMYY
+            $post_data['CVV2'] = $card_cvc; // CVV code
 
             if ($this->debug) {
                 $log = $post_data;
@@ -551,38 +584,38 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             if (isset($parsed_response['RESULT']) && in_array($parsed_response['RESULT'], array(0, 126, 127))) {
 
                 switch ($parsed_response['RESULT']) {
-
+                    // Approved or screening service was down
                     case 0 :
                     case 127 :
                         $txn_id = (!empty($parsed_response['PNREF']) ) ? wc_clean($parsed_response['PNREF']) : '';
 
-
+                        // get transaction details
                         $details = $this->get_transaction_details($txn_id);
 
-
+                        // check if it is captured or authorization only [transstate 3 is authoriztion only]
                         if ($details && strtolower($details['TRANSSTATE']) === '3') {
-
+                            // Store captured value
                             update_post_meta($order->id, '_paypalpro_charge_captured', 'no');
                             add_post_meta($order->id, '_transaction_id', $txn_id, true);
 
-
+                            // Mark as on-hold
                             $order->update_status('on-hold', sprintf(__('PayPal Pro (PayFlow) charge authorized (Charge ID: %s). Process order to take payment, or cancel to remove the pre-authorization.', 'paypal-pro-for-woocommerce'), $txn_id));
 
-
+                            // Reduce stock levels
                             $order->reduce_order_stock();
                         } else {
 
-
+                            // Add order note
                             $order->add_order_note(sprintf(__('PayPal Pro (Payflow) payment completed (PNREF: %s)', 'paypal-pro-for-woocommerce'), $parsed_response['PNREF']));
 
-
+                            // Payment complete
                             $order->payment_complete($txn_id);
                         }
 
-
+                        // Remove cart
                         WC()->cart->empty_cart();
                         break;
-
+                    // Under Review by Fraud Service
                     case 126 :
                         $order->add_order_note($parsed_response['RESPMSG']);
                         $order->add_order_note($parsed_response['PREFPSMSG']);
@@ -592,14 +625,14 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
 
                 $redirect = $order->get_checkout_order_received_url();
 
-
+                // Return thank you page redirect
                 return array(
                     'result' => 'success',
                     'redirect' => $redirect
                 );
             } else {
 
-
+                // Payment failed :(
                 $order->update_status('failed', __('PayPal Pro (Payflow) payment failed. Payment was rejected due to an error: ', 'paypal-pro-for-woocommerce') . '(' . $parsed_response['RESULT'] . ') ' . '"' . $parsed_response['RESPMSG'] . '"');
 
                 wc_add_notice(__('Payment error:', 'paypal-pro-for-woocommerce') . ' ' . $parsed_response['RESPMSG'], 'error');
@@ -612,7 +645,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Get transaction details
      */
     public function get_transaction_details($transaction_id = 0) {
         $url = $this->testmode ? $this->testurl : $this->liveurl;
@@ -650,7 +683,11 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Process a refund if supported
+     * @param  int $order_id
+     * @param  float $amount
+     * @param  string $reason
+     * @return  bool|wp_error True or false based on success, or a WP_Error object
      */
     public function process_refund($order_id, $amount = null, $reason = '') {
         $order = wc_get_order($order_id);
@@ -661,10 +698,10 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             return false;
         }
 
-
+        // get transaction details
         $details = $this->get_transaction_details($order->get_transaction_id());
 
-
+        // check if it is authorized only we need to void instead
         if ($details && strtolower($details['TRANSSTATE']) === '3') {
             $order->add_order_note(__('This order cannot be refunded due to an authorized only transaction.  Please use cancel instead.', 'paypal-pro-for-woocommerce'));
 
@@ -723,7 +760,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Payment form on checkout page
      */
     public function payment_fields() {
         if ($this->description) {
@@ -739,14 +776,14 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Get user's IP address
      */
     public function get_user_ip() {
         return !empty($_SERVER['HTTP_X_FORWARD_FOR']) ? $_SERVER['HTTP_X_FORWARD_FOR'] : $_SERVER['REMOTE_ADDR'];
     }
 
     /**
-     * @since    1.0.0
+     * Add a log entry
      */
     public function log($message) {
         if ($this->debug) {

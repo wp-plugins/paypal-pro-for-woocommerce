@@ -122,7 +122,7 @@ class MBJ_PayPal_Pro_WooCommerce_Admin {
 
         if ($order->payment_method === 'paypal_pro_payflow' && $txn_id && $captured === 'no') {
 
-            $paypalpro_payflow = new MBJ_PayPal_Pro_WooCommerce_Pro_Payflow();
+            $paypalpro_payflow = new MBJ_PayPal_Pro_WooCommerce_Pro_PayFlow();
 
             $url = $paypalpro_payflow->testmode ? $paypalpro_payflow->testurl : $paypalpro_payflow->liveurl;
 

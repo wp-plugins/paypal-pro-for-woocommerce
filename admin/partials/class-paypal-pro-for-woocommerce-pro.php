@@ -10,14 +10,14 @@
 class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
 
     /**
-     * @since    1.0.0
+     * Constuctor
      */
     public function __construct() {
         $this->id = 'paypal_pro';
         $this->api_version = '119';
         $this->method_title = __('PayPal Pro', 'paypal-pro-for-woocommerce');
         $this->method_description = __('PayPal Pro works by adding credit card fields on the checkout and then sending the details to PayPal for verification.', 'paypal-pro-for-woocommerce');
-        $this->icon = apply_filters('woocommerce_paypal_pro_icon', plugins_url('/admin/assets/images/cards.png', plugin_basename(dirname(__FILE__))));
+        $this->icon = apply_filters('woocommerce_paypal_pro_icon', plugins_url('/assets/images/cards.png', plugin_basename(dirname(__FILE__))));
         $this->has_fields = true;
         $this->supports = array(
             'products',
@@ -54,8 +54,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                 'JCB' => 'JCB'
             )
         ));
-
-
+        // this redundant filter is target previous typo'd filter name
         $this->available_card_types = apply_filters('woocommerce_paypal_pro_avaiable_card_types', $this->available_card_types);
 
         $this->iso4217 = apply_filters('woocommerce_paypal_pro_iso_currencies', array(
@@ -76,12 +75,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             'USD' => '840'
         ));
 
-
+        // Load the form fields
         $this->init_form_fields();
 
-
+        // Load the settings.
         $this->init_settings();
 
+        // Get setting values
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->enabled = $this->get_option('enabled');
@@ -96,6 +96,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
         $this->soft_descriptor = str_replace(' ', '-', preg_replace('/[^A-Za-z0-9\-\.]/', '', $this->get_option('soft_descriptor', "")));
         $this->paymentaction = $this->get_option('paypal_pro_paymentaction', 'sale');
 
+        // 3DS
         if ($this->enable_3dsecure) {
             $this->centinel_pid = $this->get_option('centinel_pid');
             $this->centinel_mid = $this->get_option('centinel_mid');
@@ -119,7 +120,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Initialise Gateway Settings Form Fields
      */
     public function init_form_fields() {
         $this->form_fields = array(
@@ -252,7 +253,11 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Admin Panel Options
+     * - Options for bits like 'title' and availability on a country-by-country basis
+     *
+     * @access public
+     * @return void
      */
     public function admin_options() {
         parent::admin_options();
@@ -272,7 +277,9 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Check if this gateway is enabled and available in the user's country
+     *
+     * This method no is used anywhere??? put above but need a fix below
      */
     public function is_available() {
         if ($this->enabled === "yes") {
@@ -298,7 +305,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Payment form on checkout page
      */
     public function payment_fields() {
         if ($this->description) {
@@ -309,7 +316,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Validate the payment form
      */
     public function validate_fields() {
         try {
@@ -355,7 +362,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Process the payment
      */
     public function process_payment($order_id) {
         $order = new WC_Order($order_id);
@@ -366,6 +373,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
         $card_cvc = isset($_POST['paypal_pro-card-cvc']) ? woocommerce_clean($_POST['paypal_pro-card-cvc']) : '';
         $card_expiry = isset($_POST['paypal_pro-card-expiry']) ? woocommerce_clean($_POST['paypal_pro-card-expiry']) : '';
 
+        // Format values
         $card_number = str_replace(array(' ', '-'), '', $card_number);
         $card_expiry = array_map('trim', explode('/', $card_expiry));
         $card_exp_month = str_pad($card_expiry[0], 2, "0", STR_PAD_LEFT);
@@ -375,6 +383,9 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             $card_exp_year += 2000;
         }
 
+        /**
+         * 3D Secure Handling
+         */
         if ($this->enable_3dsecure) {
 
             if (!class_exists('CentinelClient')) {
@@ -394,11 +405,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             $centinelClient->add("BrowserHeader", $_SERVER["HTTP_ACCEPT"]);
             $centinelClient->add("TransactionType", 'C');
 
+            // Standard cmpi_lookup fields
             $centinelClient->add('OrderNumber', $order_id);
             $centinelClient->add('Amount', $order->order_total * 100);
             $centinelClient->add('CurrencyCode', $this->iso4217[$order->get_order_currency()]);
             $centinelClient->add('TransactionMode', 'S');
 
+            // Items
             $item_loop = 0;
 
             if (sizeof($order->get_items()) > 0) {
@@ -411,16 +424,19 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                 }
             }
 
+            // Payer Authentication specific fields
             $centinelClient->add('CardNumber', $card_number);
             $centinelClient->add('CardExpMonth', $card_exp_month);
             $centinelClient->add('CardExpYear', $card_exp_year);
 
+            // Send request
             $centinelClient->sendHttp($this->centinel_url, "5000", "15000");
 
             $this->log('Centinal client request: ' . print_r($centinelClient->request, true));
             $this->log('Centinal client response: ' . print_r($centinelClient->response, true));
 
-            WC()->session->set("paypal_pro_orderid", $order_id);
+            // Save response in session
+            WC()->session->set("paypal_pro_orderid", $order_id); // Save lookup response in session
             WC()->session->set("Centinel_cmpiMessageResp", $centinelClient->response);
             WC()->session->set("Centinel_Enrolled", $centinelClient->getValue("Enrolled"));
             WC()->session->set("Centinel_TransactionId", $centinelClient->getValue("TransactionId"));
@@ -430,11 +446,16 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             WC()->session->set("Centinel_ErrorDesc", $centinelClient->getValue("ErrorDesc"));
             WC()->session->set("Centinel_EciFlag", $centinelClient->getValue("EciFlag"));
             WC()->session->set("Centinel_TransactionType", "C");
-            WC()->session->set('Centinel_TermUrl', WC()->api_request_url('MBJ_PayPal_Pro_WooCommerce_Pro'));
+            WC()->session->set('Centinel_TermUrl', WC()->api_request_url('WC_Gateway_PayPal_Pro'));
             WC()->session->set('Centinel_OrderId', $centinelClient->getValue("OrderId"));
 
             $this->log('3dsecure Centinel_Enrolled: ' . WC()->session->get('Centinel_Enrolled'));
 
+            /*             * *************************************************************************** */
+            /*                                                                            */
+            /*                          Result Processing Logic                           */
+            /*                                                                            */
+            /*             * *************************************************************************** */
 
             if (WC()->session->get('Centinel_ErrorNo') == 0) {
 
@@ -456,13 +477,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                                 <input type="hidden" name="PaReq" value="<?php echo WC()->session->get("Centinel_Payload"); ?>">
                                 <input type="hidden" name="TermUrl" value="<?php echo WC()->session->get('Centinel_TermUrl'); ?>">
                                 <input type="hidden" name="MD" value="<?php
-                    echo urlencode(json_encode(array(
-                        'card' => $card_number,
-                        'csc' => $card_cvc,
-                        'card_exp_month' => $card_exp_month,
-                        'card_exp_year' => $card_exp_year
-                    )));
-                    ?>">
+                                echo urlencode(json_encode(array(
+                                    'card' => $card_number,
+                                    'csc' => $card_cvc,
+                                    'card_exp_month' => $card_exp_month,
+                                    'card_exp_year' => $card_exp_year
+                                )));
+                                ?>">
                                 <noscript>
                                 <div class="woocommerce_message"><?php _e('Processing your Payer Authentication Transaction', 'paypal-pro-for-woocommerce'); ?> - <?php _e('Please click Submit to continue the processing of your transaction.', 'paypal-pro-for-woocommerce'); ?>  <input type="submit" class="button" id="3ds_submit" value="Submit" /></div>
                                 </noscript>
@@ -489,11 +510,16 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             }
         }
 
+        // Do payment with paypal
         return $this->do_payment($order, $card_number, '', $card_exp_month, $card_exp_year, $card_cvc);
     }
 
     /**
-     * @since    1.0.0
+     * Process a refund if supported
+     * @param  int $order_id
+     * @param  float $amount
+     * @param  string $reason
+     * @return  bool|wp_error True or false based on success, or a WP_Error object
      */
     public function process_refund($order_id, $amount = null, $reason = '') {
         $order = wc_get_order($order_id);
@@ -504,8 +530,10 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             return false;
         }
 
+        // get transaction details
         $details = $this->get_transaction_details($order->get_transaction_id());
 
+        // check if it is authorized only we need to void instead
         if ($details && strtolower($details['PENDINGREASON']) === 'authorization') {
             $order->add_order_note(__('This order cannot be refunded due to an authorized only transaction.  Please use cancel instead.', 'paypal-pro-for-woocommerce'));
 
@@ -569,7 +597,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Auth 3dsecure
      */
     public function authorise_3dsecure() {
         if (!class_exists('CentinelClient')) {
@@ -583,6 +611,11 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
 
         $this->log('authorise_3dsecure() for order ' . absint($order_id));
 
+        /*         * *************************************************************************** */
+        /*                                                                            */
+        /*    If the PaRes is Not Empty then process the cmpi_authenticate message    */
+        /*                                                                            */
+        /*         * *************************************************************************** */
 
         if (strcasecmp('', $pares) != 0 && $pares != null) {
 
@@ -616,6 +649,12 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             WC()->session->set("Centinel_ErrorDesc", "NO PARES RETURNED");
         }
 
+        /*         * *************************************************************************** */
+        /*                                                                            */
+        /*                  Determine if the transaction resulted in                  */
+        /*                  an error.                                                 */
+        /*                                                                            */
+        /*         * *************************************************************************** */
 
         $redirect_url = $this->get_return_url($order);
 
@@ -663,13 +702,27 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * do_payment function.
+     *
+     * @access public
+     * @param mixed $order
+     * @param mixed $card_number
+     * @param mixed $card_type
+     * @param mixed $card_exp_month
+     * @param mixed $card_exp_year
+     * @param mixed $card_cvc
+     * @param string $centinelPAResStatus (default: '')
+     * @param string $centinelEnrolled (default: '')
+     * @param string $centinelCavv (default: '')
+     * @param string $centinelEciFlag (default: '')
+     * @param string $centinelXid (default: '')
+     * @return void
      */
     public function do_payment($order, $card_number, $card_type, $card_exp_month, $card_exp_year, $card_cvc, $centinelPAResStatus = '', $centinelEnrolled = '', $centinelCavv = '', $centinelEciFlag = '', $centinelXid = '') {
 
         $card_exp = $card_exp_month . $card_exp_year;
 
-
+        // Send request to paypal
         try {
             $url = $this->testmode ? $this->testurl : $this->liveurl;
 
@@ -703,17 +756,17 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                 'SHIPTOSTATE' => $order->shipping_state,
                 'SHIPTOCOUNTRYCODE' => $order->shipping_country,
                 'SHIPTOZIP' => $order->shipping_postcode,
-                'BUTTONSOURCE' => 'mbjtechnolabs_SP'
+                'BUTTONSOURCE' => 'WooThemes_Cart'
             );
 
             if ($this->soft_descriptor) {
                 $post_data['SOFTDESCRIPTOR'] = $this->soft_descriptor;
             }
 
-
+            /* Send Item details - thanks Harold Coronado */
             if ($this->send_items) {
 
-
+                /* Send Item details */
                 $item_loop = 0;
 
                 if (sizeof($order->get_items()) > 0) {
@@ -742,7 +795,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                         }
                     }
 
-
+                    // Shipping
                     if (( $order->get_total_shipping() + $order->get_shipping_tax() ) > 0) {
                         $post_data['L_NUMBER' . $item_loop] = $item_loop;
                         $post_data['L_NAME' . $item_loop] = 'Shipping';
@@ -754,7 +807,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                         $item_loop++;
                     }
 
-
+                    // Discount
                     if ($order->get_order_discount() > 0) {
                         $post_data['L_NUMBER' . $item_loop] = $item_loop;
                         $post_data['L_NAME' . $item_loop] = 'Order Discount';
@@ -785,7 +838,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                 $this->log('Do payment request ' . print_r($log, true));
             }
 
-
+            /* 3D Secure */
             if ($this->enable_3dsecure) {
                 $post_data['AUTHSTATUS3DS'] = $centinelPAResStatus;
                 $post_data['MPIVENDOR3DS'] = $centinelEnrolled;
@@ -830,30 +883,30 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                     $txn_id = (!empty($parsed_response['TRANSACTIONID']) ) ? wc_clean($parsed_response['TRANSACTIONID']) : '';
                     $correlation_id = (!empty($parsed_response['CORRELATIONID']) ) ? wc_clean($parsed_response['CORRELATIONID']) : '';
 
-
+                    // get transaction details
                     $details = $this->get_transaction_details($txn_id);
 
-
+                    // check if it is captured or authorization only
                     if ($details && strtolower($details['PAYMENTSTATUS']) === 'pending' && strtolower($details['PENDINGREASON']) === 'authorization') {
-
+                        // Store captured value
                         update_post_meta($order->id, '_paypalpro_charge_captured', 'no');
                         add_post_meta($order->id, '_transaction_id', $txn_id, true);
 
-
+                        // Mark as on-hold
                         $order->update_status('on-hold', sprintf(__('PayPal Pro charge authorized (Charge ID: %s). Process order to take payment, or cancel to remove the pre-authorization.', 'paypal-pro-for-woocommerce'), $txn_id));
 
-
+                        // Reduce stock levels
                         $order->reduce_order_stock();
                     } else {
 
-
+                        // Add order note
                         $order->add_order_note(sprintf(__('PayPal Pro payment completed (Transaction ID: %s, Correlation ID: %s)', 'paypal-pro-for-woocommerce'), $txn_id, $correlation_id));
 
-
+                        // Payment complete
                         $order->payment_complete($txn_id);
                     }
 
-
+                    // Remove cart
                     WC()->cart->empty_cart();
 
                     if (method_exists($order, 'get_checkout_order_received_url')) {
@@ -862,7 +915,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                         $redirect = add_query_arg('key', $order->order_key, add_query_arg('order', $order->id, get_permalink(get_option('woocommerce_thanks_page_id'))));
                     }
 
-
+                    // Return thank you page redirect
                     return array(
                         'result' => 'success',
                         'redirect' => $redirect
@@ -871,7 +924,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                 case 'failure':
                 default:
 
-
+                    // Get error message
                     if (!empty($parsed_response['L_LONGMESSAGE0']))
                         $error_message = $parsed_response['L_LONGMESSAGE0'];
                     elseif (!empty($parsed_response['L_SHORTMESSAGE0']))
@@ -881,7 +934,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                     elseif ($this->testmode)
                         $error_message = print_r($parsed_response, true);
 
-
+                    // Payment failed :(
                     $order->update_status('failed', sprintf(__('PayPal Pro payment failed (Correlation ID: %s). Payment was rejected due to an error: ', 'paypal-pro-for-woocommerce'), $parsed_response['CORRELATIONID']) . '(' . $parsed_response['L_ERRORCODE0'] . ') ' . '"' . $error_message . '"');
 
                     throw new Exception($error_message);
@@ -895,7 +948,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Get transaction details
      */
     public function get_transaction_details($transaction_id = 0) {
         $url = $this->testmode ? $this->testurl : $this->liveurl;
@@ -941,14 +994,14 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Get user's IP address
      */
     public function get_user_ip() {
         return !empty($_SERVER['HTTP_X_FORWARD_FOR']) ? $_SERVER['HTTP_X_FORWARD_FOR'] : $_SERVER['REMOTE_ADDR'];
     }
 
     /**
-     * @since    1.0.0
+     * clear_centinel_session function.
      */
     public function clear_centinel_session() {
         WC()->session->set("paypal_pro_orderid", null);
@@ -966,7 +1019,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
     }
 
     /**
-     * @since    1.0.0
+     * Add a log entry
      */
     public function log($message) {
         if ($this->debug) {

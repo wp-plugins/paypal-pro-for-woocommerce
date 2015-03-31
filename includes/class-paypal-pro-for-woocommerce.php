@@ -49,7 +49,7 @@ class MBJ_PayPal_Pro_WooCommerce {
     public function __construct() {
 
         $this->plugin_name = 'paypal-pro-for-woocommerce';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
 
         $this->load_dependencies();
         $this->set_locale();
@@ -122,8 +122,10 @@ class MBJ_PayPal_Pro_WooCommerce {
     private function define_admin_hooks() {
 
         $plugin_admin = new MBJ_PayPal_Pro_WooCommerce_Admin($this->get_plugin_name(), $this->get_version());
+
         $this->loader->add_action('plugins_loaded', $plugin_admin, 'load_plugin_extend_lib');
         $this->loader->add_filter('woocommerce_payment_gateways', $plugin_admin, 'register_gateway');
+
         if (is_admin()) {
             $this->loader->add_action('admin_notices', $plugin_admin, 'ssl_check');
         }
