@@ -1,0 +1,530 @@
+# Copyright (C) 2015 PayPal Pro for WooCommerce
+# This file is distributed under the same license as the PayPal Pro for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PayPal Pro for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/paypal-pro-for-"
+"woocommerce\n"
+"POT-Creation-Date: 2015-03-07 14:29:22+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:64
+msgid ""
+"PayPal Pro requires that the <a href=\"%s\">Force secure checkout</a> option "
+"is enabled; your checkout may not be secure! Please enable SSL and ensure "
+"your server has a valid SSL certificate - PayPal Pro will only work in test "
+"mode."
+msgstr ""
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:110
+#: admin/class-paypal-pro-for-woocommerce-admin.php:153
+#: admin/class-paypal-pro-for-woocommerce-admin.php:155
+msgid "Unable to capture charge!"
+msgstr ""
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:114
+msgid "PayPal Pro charge complete (Transaction ID: %s)"
+msgstr ""
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:161
+msgid "PayPal Pro (Payflow) delay charge complete (PNREF: %s)"
+msgstr ""
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:207
+#: admin/class-paypal-pro-for-woocommerce-admin.php:244
+#: admin/class-paypal-pro-for-woocommerce-admin.php:246
+msgid "Unable to void charge!"
+msgstr ""
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:211
+msgid "PayPal Pro void complete (Authorization ID: %s)"
+msgstr ""
+
+#: admin/class-paypal-pro-for-woocommerce-admin.php:251
+msgid "PayPal Pro (Payflow) void complete (PNREF: %s)"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:17
+msgid "PayPal Pro PayFlow"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:18
+msgid ""
+"PayPal Pro PayFlow Edition works by adding credit card fields on the "
+"checkout and then sending the details to PayPal for verification."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:50
+msgid "Enter payment details"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:65
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:127
+msgid "Enable/Disable"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:66
+msgid "Enable PayPal Pro Payflow Edition"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:72
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:134
+msgid "Title"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:74
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:136
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:75
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:137
+msgid "Credit card (PayPal)"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:79
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:141
+msgid "Description"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:81
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:143
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:82
+msgid "Pay with your credit card."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:86
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:233
+msgid "Soft Descriptor"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:88
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:235
+msgid ""
+"(Optional) Information that is usually displayed in the account holder's "
+"statement, for example your website name. Only 23 alphanumeric characters "
+"can be included, including the special characters dash (-) and dot (.) . "
+"Asterisks (*) and spaces ( ) are NOT permitted."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:97
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:148
+msgid "Test Mode"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:98
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:149
+msgid "Enable PayPal Sandbox/Test Mode"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:100
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:151
+msgid "Place the payment gateway in development mode."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:105
+msgid "Transparent Redirect"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:106
+msgid "Enable Transparent Redirect"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:108
+msgid ""
+"Rather than showing a credit card form on your checkout, this shows the form "
+"on it's own page and posts straight to PayPal, thus making the process more "
+"secure and more PCI friendly. \"Enable Secure Token\" needs to be enabled on "
+"your PayFlow account to work."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:113
+msgid "PayPal Vendor"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:115
+msgid ""
+"Your merchant login ID that you created when you registered for the account."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:120
+msgid "PayPal Password"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:122
+msgid "The password that you defined while registering for the account."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:127
+msgid "PayPal User"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:129
+msgid ""
+"If you set up one or more additional users on the account, this value is the "
+"ID\n"
+"\t\t\tof the user authorized to process transactions. Otherwise, leave this "
+"field blank."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:135
+msgid "PayPal Partner"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:137
+msgid ""
+"The ID provided to you by the authorized PayPal Reseller who registered you\n"
+"\t\t\tfor the Payflow SDK. If you purchased your account directly from "
+"PayPal, use PayPal or leave blank."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:143
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:177
+msgid "Payment Action"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:145
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:179
+msgid ""
+"Choose whether you wish to capture funds immediately or authorize payment "
+"only."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:149
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:183
+msgid "Capture"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:150
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:184
+msgid "Authorize"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:154
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:244
+msgid "Debug Log"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:156
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:246
+msgid "Enable logging"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:159
+msgid ""
+"Log PayPal Pro (Payflow) events inside <code>woocommerce/logs/paypal-pro-"
+"payflow.txt</code>"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:238
+msgid ""
+"Enter your payment details below and click \"Confirm and pay\" to securely "
+"pay for your order."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:244
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:733
+msgid ""
+"TEST/SANDBOX MODE ENABLED. In test mode, you can use the card number "
+"4111111111111111 with any CVC and a valid expiration date."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:248
+msgid "Card Number "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:253
+msgid "Expiry (MM/YY) "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:258
+msgid "Card Code "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:267
+msgid "Confirm and pay"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:311
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:569
+msgid ""
+"PayPal Pro (PayFlow) charge authorized (Charge ID: %s). Process order to "
+"take payment, or cancel to remove the pre-authorization."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:314
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:576
+msgid "PayPal Pro (Payflow) payment completed (PNREF: %s)"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:325
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:589
+msgid ""
+"The payment was flagged by a fraud filter. Please check your PayPal Manager "
+"account to review and accept or deny the payment and then mark this order "
+"\"processing\" or \"cancelled\"."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:373
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:538
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:640
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:711
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:553
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:812
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:927
+msgid "There was a problem connecting to the payment gateway."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:378
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:544
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:820
+msgid "Empty Paypal response."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:396
+msgid "PayPal Pro (Payflow) token generation failed: "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:398
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:605
+msgid "Payment error:"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:603
+msgid ""
+"PayPal Pro (Payflow) payment failed. Payment was rejected due to an error: "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:609
+msgid "Connection error:"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:669
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:673
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:510
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:514
+msgid ""
+"This order cannot be refunded due to an authorized only transaction.  Please "
+"use cancel instead."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php:717
+msgid "Refunded %s - PNREF: %s"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:18
+msgid "PayPal Pro"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:19
+msgid ""
+"PayPal Pro works by adding credit card fields on the checkout and then "
+"sending the details to PayPal for verification."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:128
+msgid "Enable PayPal Pro"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:144
+msgid "Pay with your credit card via PayPal Website Payments Pro."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:156
+msgid "API Username"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:158
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:165
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:172
+msgid "Get your API credentials from PayPal."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:163
+msgid "API Password"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:170
+msgid "API Signature"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:188
+msgid "3DSecure"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:189
+msgid "Enable 3DSecure"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:191
+msgid ""
+"Allows UK merchants to pass 3-D Secure authentication data to PayPal for "
+"debit and credit cards. Updating your site with 3-D Secure enables your "
+"participation in the Verified by Visa and MasterCard SecureCode programs. "
+"(Required to accept Maestro)"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:196
+msgid "Centinel PID"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:198
+msgid "If enabling 3D Secure, enter your Cardinal Centinel Processor ID."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:203
+msgid "Centinel MID"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:205
+msgid "If enabling 3D Secure, enter your Cardinal Centinel Merchant ID."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:210
+msgid "Transaction Password"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:212
+msgid ""
+"If enabling 3D Secure, enter your Cardinal Centinel Transaction Password."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:217
+msgid "Liability Shift"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:218
+msgid "Require liability shift"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:220
+msgid "Only accept payments when liability shift has occurred."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:225
+msgid "Send Item Details"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:226
+msgid "Send Line Items to PayPal"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:228
+msgid ""
+"Sends line items to PayPal. If you experience rounding errors this can be "
+"disabled."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:249
+msgid ""
+"Log PayPal Pro events inside <code>woocommerce/logs/paypal-pro.txt</code>"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:305
+msgid ""
+"TEST/SANDBOX MODE ENABLED. In test mode, you can use the card number "
+"4007000000027 with any CVC and a valid expiration date.  Note that you will "
+"get a faster processing result if you use a card from your developer's "
+"account."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:333
+msgid "Card security code is invalid (only digits are allowed)"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:343
+msgid "Card expiration date is invalid"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:347
+msgid "Card number is invalid"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:467
+msgid "Processing your Payer Authentication Transaction"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:467
+msgid "Please click Submit to continue the processing of your transaction."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:479
+msgid ""
+"Authentication unavailable. Please try a different payment method or card."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:487
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:655
+msgid "Error in 3D secure authentication: "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:561
+msgid "Refunded %s - Refund ID: %s"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:636
+msgid "3D Secure error: No liability shift"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:637
+msgid ""
+"Authentication unavailable.  Please try a different payment method or card."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:650
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:654
+msgid "3D Secure error: %s"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:651
+msgid "Payer Authentication failed.  Please try a different payment method."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:843
+msgid ""
+"PayPal Pro charge authorized (Charge ID: %s). Process order to take payment, "
+"or cancel to remove the pre-authorization."
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:850
+msgid "PayPal Pro payment completed (Transaction ID: %s, Correlation ID: %s)"
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:885
+msgid ""
+"PayPal Pro payment failed (Correlation ID: %s). Payment was rejected due to "
+"an error: "
+msgstr ""
+
+#: admin/partials/class-paypal-pro-for-woocommerce-pro.php:892
+msgid "Payment error"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "PayPal Pro for WooCommerce"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (PayPal Pro for WooCommerce 1.0.0)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (PayPal Pro for WooCommerce 1.0.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.mbjtechnolabs.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"PayPal Pro is a direct gateway which allows you to take credit card, PayPal "
+"Credit, and PayPal details directly on your checkout page."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "johnny-manziel"
+msgstr ""
