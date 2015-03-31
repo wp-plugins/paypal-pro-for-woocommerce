@@ -444,7 +444,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
         $post_data['CUSTIP'] = $this->get_user_ip(); // User IP Address
         $post_data['EMAIL'] = $order->billing_email;
         $post_data['INVNUM'] = $order->get_order_number();
-        $post_data['BUTTONSOURCE'] = 'WooThemes_Cart';
+        $post_data['BUTTONSOURCE'] = 'mbjtechnolabs_SP';
 
         if ($this->soft_descriptor) {
             $post_data['MERCHDESCR'] = $this->soft_descriptor;

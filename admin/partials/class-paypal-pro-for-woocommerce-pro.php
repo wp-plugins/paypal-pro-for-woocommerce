@@ -756,7 +756,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                 'SHIPTOSTATE' => $order->shipping_state,
                 'SHIPTOCOUNTRYCODE' => $order->shipping_country,
                 'SHIPTOZIP' => $order->shipping_postcode,
-                'BUTTONSOURCE' => 'WooThemes_Cart'
+                'BUTTONSOURCE' => 'mbjtechnolabs_SP'
             );
 
             if ($this->soft_descriptor) {

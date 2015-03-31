@@ -96,6 +96,8 @@ PayPal Pro requires that you have a PayPal Pro merchant account which you can si
 
 
 == Changelog ==
+= 1.0.2 =
+*       change source value
 = 1.0.1 =
 *       woocommerce compatible version 2.3.7
 
