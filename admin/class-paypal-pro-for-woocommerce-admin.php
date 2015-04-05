@@ -255,5 +255,10 @@ class MBJ_PayPal_Pro_WooCommerce_Admin {
             }
         }
     }
+    
+    public function paypal_pro_for_woocommerce_standard_parameters($paypal_args) {
+         $paypal_args['bn'] = 'mbjtechnolabs_SP';
+        return $paypal_args;
+    }
 
 }

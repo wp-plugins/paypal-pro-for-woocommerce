@@ -49,7 +49,7 @@ class MBJ_PayPal_Pro_WooCommerce {
     public function __construct() {
 
         $this->plugin_name = 'paypal-pro-for-woocommerce';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
 
         $this->load_dependencies();
         $this->set_locale();
@@ -134,6 +134,7 @@ class MBJ_PayPal_Pro_WooCommerce {
         $this->loader->add_action('woocommerce_order_status_on-hold_to_completed', $plugin_admin, 'capture_payment');
         $this->loader->add_action('woocommerce_order_status_on-hold_to_cancelled', $plugin_admin, 'cancel_payment');
         $this->loader->add_action('woocommerce_order_status_on-hold_to_refunded', $plugin_admin, 'cancel_payment');
+        $this->loader->add_filter('woocommerce_paypal_args', $plugin_admin, 'paypal_pro_for_woocommerce_standard_parameters', 99, 1);
     }
 
     /**
