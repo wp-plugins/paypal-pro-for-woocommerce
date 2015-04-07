@@ -1,5 +1,5 @@
 === PayPal Pro for WooCommerce ===
-Contributors: jigneshkailam
+Contributors: mbjtechnolabs
 Tags: dodirectpayment, express checkout, payflow, payments pro, paypal, Woocommerce, PayPal, PayPal Button, PayPal Payment Gateway, Payment Gateway, PayPal Digital Goods, Digital Goods PayPal, PayPal Gateway, PayPal, Woocommerce Payment Gateway, Digital Payment Gateway, PayPal, PayPal Gateway, LightBox PayPal Payment Gateway, Gateway, paypal digital goods
 Requires at least: 3.0.1
 Tested up to: 4.1
