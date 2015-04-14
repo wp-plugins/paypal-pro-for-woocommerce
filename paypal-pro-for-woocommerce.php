@@ -4,11 +4,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       PayPal Pro for WooCommerce
- * Plugin URI:        http://www.mbjtechnolabs.com
+ * Plugin URI:        http://webs-spider.com/
  * Description:       PayPal Pro is a direct gateway which allows you to take credit card, PayPal Credit, and PayPal details directly on your checkout page.
- * Version:           1.0.3
- * Author:            mbjtechnolabs
- * Author URI:        http://www.mbjtechnolabs.com
+ * Version:           1.0.4
+ * Author:            johnwickjigo
+ * Author URI:        http://webs-spider.com/
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       paypal-pro-for-woocommerce
