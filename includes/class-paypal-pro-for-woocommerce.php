@@ -49,7 +49,7 @@ class MBJ_PayPal_Pro_WooCommerce {
     public function __construct() {
 
         $this->plugin_name = 'paypal-pro-for-woocommerce';
-        $this->version = '1.0.3';
+        $this->version = '1.2.0';
 
         $this->load_dependencies();
         $this->set_locale();
