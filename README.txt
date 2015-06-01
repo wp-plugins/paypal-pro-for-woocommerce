@@ -1,13 +1,13 @@
 === PayPal Pro for WooCommerce ===
 Contributors: johnwickjigo
-Tags: dodirectpayment, express checkout, payflow, payments pro, paypal, Woocommerce, PayPal, PayPal Button, PayPal Payment Gateway, Payment Gateway, PayPal Digital Goods, Digital Goods PayPal, PayPal Gateway, PayPal, Woocommerce Payment Gateway, Digital Payment Gateway, PayPal, PayPal Gateway, LightBox PayPal Payment Gateway, Gateway, paypal digital goods
+Tags: dodirectpayment, PayPal Pro for WooCommerce, express checkout, payflow, payments pro, paypal, Woocommerce, PayPal, PayPal Button, PayPal Payment Gateway, Payment Gateway, PayPal Digital Goods, Digital Goods PayPal, PayPal Gateway, PayPal, Woocommerce Payment Gateway, Digital Payment Gateway, PayPal, PayPal Gateway, LightBox PayPal Payment Gateway, Gateway, paypal digital goods
 Requires at least: 3.0.1 & WooCommerce 2.2+
 Tested up to: 4.2.2 & Woocommerce 2.3.10
 Stable tag: trunk
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-PayPal Pro is a direct gateway which allows you to take credit card, PayPal Credit, and PayPal details directly on your checkout page.
+PayPal Pro for WooCommerce is a direct gateway which allows you to take credit card, PayPal Credit, and PayPal details directly on your checkout page.
 == Description ==
 
 = Introduction =
@@ -21,37 +21,37 @@ PayPal Pro is a direct gateway which allows you to take credit card, PayPal Cred
 
 This Plugin offers in-context payment so buyers never leave your site to pay for an order. After a buyer has purchased once with your site.
 
-= More payment choice means more sales. =
+= More payment choice means more sales with PayPal Pro for WooCommerce. =
 *	Shoppers feel safer when they see the PayPal logo on your site.
 *	Access to over 100 million active online buyers who look for the PayPal way to pay!
 *	Set-up is a snap and processing fees are low. Start selling online in just minutes with PayPal.
 *	Join the most successful online retailers who add PayPal to streamline checkout and boost sales.
 *	PayPal invests millions to keep customer information safe and fraud rates extremely low.
 
-= Set-up is a snap = 
+= Set-up is a snap with PayPal Pro for WooCommerce. = 
 *	PayPal Pro for WooCommerce Plugin makes it faster and easier to add PayPal to your site.
  
-= Help boost Sales =
+= Help boost Sales with PayPal Pro for WooCommerce. =
 *	Open the door to over 100 million buyers who look for the PayPal way to pay.
  
-= Faster checkout helps increase sales =
+= Faster checkout helps increase sales with PayPal Pro for WooCommerce. =
 *	Streamlining checkout satisfies customers, helps increase sales and prevent shopping cart abandonment.
  
-= Start selling in just minutes =
-*	PayPal requires no set-up or cancellation fees and no advanced programming knowledge.
+= Start selling in just minutes with PayPal Pro for WooCommerce. =
+*	PayPal Pro for WooCommerce requires no set-up or cancellation fees and no advanced programming knowledge.
  
-= Peace of Mind =
+= Peace of Mind with PayPal Pro for WooCommerce. =
 *	Merchants enjoy peace of mind with a leader in payments. PayPal invests millions to keep customer information safe and fraud rates extremely low.
  
-= Trusted =
+= Trusted with PayPal Pro for WooCommerce. =
 *	Millions of retailers of all types and sizes trust the checkout experts at PayPal to increase sales by making checkout faster, easier and more secure.
  
-= Low processing rates =
+= Low processing rates with PayPal Pro for WooCommerce.  =
 *	PayPal's processing fees are easy and transparent and among the lowest around.
  
-= Save 14% on credit card processing rates for your website1. =
+= Save 14% on credit card processing rates for your website1. with PayPal Pro for WooCommerce. =
  
-= Clear and easy reporting =
+= Clear and easy reporting with PayPal Pro for WooCommerce. =
 *	PayPal reporting is clear and easy, showing all customer activity, transaction data, and profit and loss.
 
 
