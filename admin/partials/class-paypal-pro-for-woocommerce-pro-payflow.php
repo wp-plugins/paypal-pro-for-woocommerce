@@ -53,7 +53,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('woocommerce_receipt_paypal_pro_payflow', array($this, 'receipt_page'));
-        add_action('woocommerce_api_wc_gateway_paypal_pro_payflow', array($this, 'return_handler'));
+        add_action('woocommerce_api_mbj_paypal_pro_woocommerce_pro_payflow', array($this, 'return_handler'));
     }
 
     /**
@@ -487,13 +487,24 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             }
 
             // Discount
-            if ($order->get_order_discount() > 0) {
-                $post_data['L_NAME' . $item_loop] = 'Order Discount';
-                $post_data['L_DESC' . $item_loop] = 'Discounts after tax';
-                $post_data['L_COST' . $item_loop] = '-' . $order->get_order_discount();
-                $post_data['L_QTY' . $item_loop] = 1;
+            if (!$this->is_wc_version_greater_2_3()) {
+                if ($order->get_order_discount() > 0) {
+                    $post_data['L_NAME' . $item_loop] = 'Order Discount';
+                    $post_data['L_DESC' . $item_loop] = 'Discounts after tax';
+                    $post_data['L_COST' . $item_loop] = '-' . $order->get_order_discount();
+                    $post_data['L_QTY' . $item_loop] = 1;
 
-                $item_loop++;
+                    $item_loop++;
+                }
+            } else {
+                if ($order->get_total_discount() > 0) {
+                    $post_data['L_NAME' . $item_loop] = 'Order Discount';
+                    $post_data['L_DESC' . $item_loop] = 'Discounts after tax';
+                    $post_data['L_COST' . $item_loop] = '-' . $order->get_total_discount();
+                    $post_data['L_QTY' . $item_loop] = 1;
+
+                    $item_loop++;
+                }
             }
 
             $ITEMAMT = round($ITEMAMT, 2);
@@ -792,6 +803,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro_Payflow extends WC_Payment_Gateway {
             }
             $this->log->add('paypal-pro-payflow', $message);
         }
+    }
+    
+    public function is_wc_version_greater_2_3() {
+        return $this->get_wc_version() && version_compare($this->get_wc_version(), '2.3', '>=');
+    }
+    public function get_wc_version() {
+        return defined('WC_VERSION') && WC_VERSION ? WC_VERSION : null;
     }
 
 }

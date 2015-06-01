@@ -46,6 +46,30 @@ class MBJ_PayPal_Pro_WooCommerce_Admin {
 
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-paypal-pro-for-woocommerce-pro-payflow.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-paypal-pro-for-woocommerce-pro.php';
+        add_action('woocommerce_order_status_on-hold_to_processing', array($this, 'capture_payment'));
+        add_action('woocommerce_order_status_on-hold_to_completed', array($this, 'capture_payment'));
+        add_action('woocommerce_order_status_on-hold_to_cancelled', array($this, 'cancel_payment'));
+        add_action('woocommerce_order_status_on-hold_to_refunded', array($this, 'cancel_payment'));
+        add_action( 'admin_init', array( $this, 'update_ssl_nag' ) );
+    }
+
+    /**
+     *
+     * @since 1.3.1
+     * @return bool
+     */
+    public function update_ssl_nag() {
+        global $current_user;
+
+        get_currentuserinfo();
+
+        if (isset($_GET['_wpnonce']) && !wp_verify_nonce($_GET['_wpnonce'], 'wc_paypal_pro_ssl_nag_hide')) {
+            return;
+        }
+
+        if (isset($_GET['wc_paypal_pro_ssl_nag']) && '1' === $_GET['wc_paypal_pro_ssl_nag']) {
+            add_user_meta($current_user->ID, '_wc_paypal_pro_ssl_nag_hide', '1', true);
+        }
     }
 
     public function register_gateway($methods) {
@@ -56,12 +80,16 @@ class MBJ_PayPal_Pro_WooCommerce_Admin {
     }
 
     public function ssl_check() {
+        global $current_user;
+
+        get_currentuserinfo();
+
         $settings = get_option('woocommerce_paypal_pro_settings', array());
 
         // Show message if enabled and FORCE SSL is disabled and WordpressHTTPS plugin is not detected
-        if (get_option('woocommerce_force_ssl_checkout') === 'no' && !class_exists('WordPressHTTPS') && isset($settings['enabled']) && $settings['enabled'] === 'yes' && $settings['testmode'] !== 'yes'
+        if (get_option('woocommerce_force_ssl_checkout') === 'no' && !class_exists('WordPressHTTPS') && isset($settings['enabled']) && $settings['enabled'] === 'yes' && $settings['testmode'] !== 'yes' && !get_user_meta($current_user->ID, '_wc_paypal_pro_ssl_nag_hide')
         ) {
-            echo '<div class="error"><p>' . sprintf(__('PayPal Pro requires that the <a href="%s">Force secure checkout</a> option is enabled; your checkout may not be secure! Please enable SSL and ensure your server has a valid SSL certificate - PayPal Pro will only work in test mode.', 'paypal-pro-for-woocommerce'), admin_url('admin.php?page=woocommerce')) . '</p></div>';
+            echo '<div class="error"><p>' . sprintf(__('PayPal Pro requires that the <a href="%s">Force secure checkout</a> option is enabled; your checkout may not be secure! Please enable SSL and ensure your server has a valid SSL certificate - PayPal Pro will only work in test mode.', 'woocommerce-gateway-paypal-pro') . ' <a href="%s">' . __('Hide Notice', 'woocommerce') . '</a>', admin_url('admin.php?page=woocommerce'), wp_nonce_url(add_query_arg('wc_paypal_pro_ssl_nag', '1'), 'wc_paypal_pro_ssl_nag_hide')) . '</p></div>';
         }
 
         return true;
@@ -255,9 +283,13 @@ class MBJ_PayPal_Pro_WooCommerce_Admin {
             }
         }
     }
-    
+
     public function paypal_pro_for_woocommerce_standard_parameters($paypal_args) {
-         $paypal_args['bn'] = 'mbjtechnolabs_SP';
+        if (isset($paypal_args['BUTTONSOURCE'])) {
+            $paypal_args['BUTTONSOURCE'] = 'mbjtechnolabs_SP';
+        } else {
+            $paypal_args['bn'] = 'mbjtechnolabs_SP';
+        }
         return $paypal_args;
     }
 

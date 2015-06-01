@@ -115,7 +115,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
         }
 
         // Hooks
-        add_action('woocommerce_api_wc_gateway_paypal_pro', array($this, 'authorise_3dsecure'));
+        add_action('woocommerce_api_mbj_paypal_pro_woocommerce_pro', array($this, 'authorise_3dsecure'));
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
     }
 
@@ -446,7 +446,7 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             WC()->session->set("Centinel_ErrorDesc", $centinelClient->getValue("ErrorDesc"));
             WC()->session->set("Centinel_EciFlag", $centinelClient->getValue("EciFlag"));
             WC()->session->set("Centinel_TransactionType", "C");
-            WC()->session->set('Centinel_TermUrl', WC()->api_request_url('WC_Gateway_PayPal_Pro'));
+            WC()->session->set('Centinel_TermUrl', WC()->api_request_url('MBJ_PayPal_Pro_WooCommerce_Pro'));
             WC()->session->set('Centinel_OrderId', $centinelClient->getValue("OrderId"));
 
             $this->log('3dsecure Centinel_Enrolled: ' . WC()->session->get('Centinel_Enrolled'));
@@ -807,15 +807,27 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
                         $item_loop++;
                     }
 
-                    // Discount
-                    if ($order->get_order_discount() > 0) {
-                        $post_data['L_NUMBER' . $item_loop] = $item_loop;
-                        $post_data['L_NAME' . $item_loop] = 'Order Discount';
-                        $post_data['L_AMT' . $item_loop] = '-' . $order->get_order_discount();
-                        $post_data['L_QTY' . $item_loop] = 1;
+                    if (!$this->is_wc_version_greater_2_3()) {
+                        // Discount
+                        if ($order->get_order_discount() > 0) {
+                            $post_data['L_NUMBER' . $item_loop] = $item_loop;
+                            $post_data['L_NAME' . $item_loop] = 'Order Discount';
+                            $post_data['L_AMT' . $item_loop] = '-' . $order->get_order_discount();
+                            $post_data['L_QTY' . $item_loop] = 1;
 
-                        $item_loop++;
+                            $item_loop++;
+                        }
+                    } else {
+                        if ($order->get_total_discount() > 0) {
+                            $post_data['L_NAME' . $item_loop] = 'Order Discount';
+                            $post_data['L_DESC' . $item_loop] = 'Discounts after tax';
+                            $post_data['L_COST' . $item_loop] = '-' . $order->get_total_discount();
+                            $post_data['L_QTY' . $item_loop] = 1;
+
+                            $item_loop++;
+                        }
                     }
+
 
                     $ITEMAMT = round($ITEMAMT, 2);
 
@@ -1028,6 +1040,13 @@ class MBJ_PayPal_Pro_WooCommerce_Pro extends WC_Payment_Gateway {
             }
             $this->log->add('paypal-pro', $message);
         }
+    }
+    
+    public function is_wc_version_greater_2_3() {
+        return $this->get_wc_version() && version_compare($this->get_wc_version(), '2.3', '>=');
+    }
+    public function get_wc_version() {
+        return defined('WC_VERSION') && WC_VERSION ? WC_VERSION : null;
     }
 
 }
