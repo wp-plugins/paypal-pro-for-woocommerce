@@ -93,6 +93,7 @@ PayPal Pro requires that you have a PayPal Pro merchant account which you can si
 
 1. Setting up PayPal Pro page.
 2. Setting up PayPal Pro PayFlow page.
+3. Standard credit card form
 
 
 == Changelog ==
