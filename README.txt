@@ -1,8 +1,8 @@
 === PayPal Pro for WooCommerce ===
 Contributors: johnwickjigo
 Tags: dodirectpayment, express checkout, payflow, payments pro, paypal, woocommerce, paypal-pro, paypal payment gateway, easy paypal, payment gateway, paypal, woocommerce paypal, paypal for woocommerce, paypal pro for woocommerce
-Requires at least: 3.0.1 & WooCommerce 2.2+
-Tested up to: 4.2.2 & Woocommerce 2.3.10
+Requires at least: 3.0.1 
+Tested up to: 4.2.2
 Stable tag: trunk
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
