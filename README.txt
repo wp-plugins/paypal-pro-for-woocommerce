@@ -12,10 +12,12 @@ PayPal Pro for WooCommerce is a direct gateway which allows you to take credit c
 
 = Introduction =
 
+Easily add PayPal payment options to your WordPress / WooCommerce website.
 
-`PayPal Pro (website payments pro)`
-`PayPal Pro PayFlow`
+	* PayPal Website Payments Pro (DoDirectPayment)
+	* PayPal Payments Pro (PayPal Manager / PayFlow Gateway)
 
+[youtube https://www.youtube.com/watch?v=l2ZhfLmdtfo]
 
 *	Please note: As Paypal requires an SSL certificate, please make sure to check the “Force Secure Checkout” box. Go to: WooCommerce > Settings > Checkout
 
