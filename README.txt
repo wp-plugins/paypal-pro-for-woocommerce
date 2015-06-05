@@ -1,6 +1,6 @@
 === PayPal Pro for WooCommerce ===
 Contributors: johnwickjigo
-Tags: dodirectpayment, express checkout, payflow, payments pro, paypal, woocommerce, paypal-pro, paypal payment gateway, easy paypal, payment gateway, paypal, woocommerce paypal, paypal for woocommerce, paypal pro for woocommerce
+Tags: dodirectpayment, express checkout, payflow, payments pro, paypal, woocommerce, paypal-pro, paypal payment gateway, easy paypal, payment gateway, paypal, woocommerce paypal, paypal,  for woocommerce, paypal pro for woocommerce, accept credit cards online, credit card processing, paypal woocommerce, high risk merchant account, paypal pro, paypal payment pro, paypal payflow pro, paypal payments pro, merchant account, Woocommerce Paypal, paypal credit payment, online credit card payment, credit card payment, credit card numbers, fake credit card numbers
 Requires at least: 3.0.1 
 Tested up to: 4.2.2
 Stable tag: trunk
