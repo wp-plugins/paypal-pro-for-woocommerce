@@ -16,6 +16,9 @@ Easily add PayPal payment options to your WordPress / WooCommerce website.
 
 	* PayPal Website Payments Pro (DoDirectPayment)
 	* PayPal Payments Pro (PayPal Manager / PayFlow Gateway)
+	
+	
+Need help? Contact me at: phpwebcreators@gmail.com	any time :)
 
 [youtube https://www.youtube.com/watch?v=l2ZhfLmdtfo]
 
