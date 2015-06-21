@@ -10,6 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 PayPal Pro for WooCommerce is a direct gateway which allows you to take credit card, PayPal Credit, and PayPal details directly on your checkout page.
 == Description ==
 
+
 = Introduction =
 
 Easily add PayPal payment options to your WordPress / WooCommerce website.
